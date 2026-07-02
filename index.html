@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarapur Evacuation Simulation</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="title-wrap">
+          <h1>Tarapur Evacuation Simulation</h1>
+          <p>Scenario Exploration</p>
+        </div>
+        <div class="evac-card">
+          <div class="evac-label">Population Evacuated</div>
+          <div id="evacPct" class="evac-value">0.0%</div>
+          <div id="evacRaw" class="evac-sub">0 / 0 people</div>
+          <div id="runIdLabel" class="evac-sub">Run: -</div>
+          <div id="datasetLabel" class="evac-sub">Scenario: Night · Buildings: -</div>
+        </div>
+      </header>
+
+      <section class="controls">
+        <button id="playPauseBtn" class="btn">Play</button>
+        <label for="stepSlider">Step:</label>
+        <input id="stepSlider" type="range" min="0" max="0" value="0" step="1" />
+        <span id="stepLabel">Step 0</span>
+        <span id="timeLabel">Time 0.0 min</span>
+
+        <label for="speedSelect">Speed</label>
+        <select id="speedSelect">
+          <option value="1500">0.5x</option>
+          <option value="1000" selected>1x</option>
+          <option value="500">2x</option>
+          <option value="250">4x</option>
+        </select>
+
+        <label for="displayModeSelect">Display</label>
+        <select id="displayModeSelect">
+          <option value="both" selected>Roads + Buildings</option>
+          <option value="roads">Roads only</option>
+          <option value="buildings">Buildings only</option>
+        </select>
+
+        <label for="scenarioSelect">Scenario</label>
+        <select id="scenarioSelect">
+          <option value="night" selected>Night</option>
+          <option value="day" disabled>Day (not available yet)</option>
+        </select>
+
+        <span id="scenarioStatus" class="control-note">Current dataset: Night-only results</span>
+      </section>
+
+      <section class="legend">
+        <div class="legend-group">
+          <strong>Road occupancy</strong>
+          <div><span class="swatch green"></span> 0.00 - 0.25 (low)</div>
+          <div><span class="swatch orange"></span> &gt;0.25 - 0.50 (medium)</div>
+          <div><span class="swatch red"></span> &gt;0.50 - 1.00 (high)</div>
+        </div>
+        <div class="legend-group">
+          <strong>Buildings</strong>
+          <div><span class="swatch red"></span> Occupied / not fully evacuated</div>
+          <div><span class="swatch green"></span> Fully evacuated</div>
+        </div>
+      </section>
+
+      <div id="map"></div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
