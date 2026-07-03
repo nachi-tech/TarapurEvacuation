@@ -1,0 +1,9 @@
+metric,value
+buildings_selected,103526.0
+buildings_in_circle,103525.0
+buildings_in_midc,12523.0
+eligible_buildings,91002.0
+total_population_clipped_float,284346.40207859233
+total_population_allocated_int,284346.0
+total_population_in_output,284346.0
+nonzero_buildings,55215.0

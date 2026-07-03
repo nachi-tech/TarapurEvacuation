@@ -1,0 +1,11 @@
+metric,value
+population_column,pop_alloc
+total_buildings,33541
+midc_buildings,4590
+target_midc_population,220000
+allocated_midc_population,220000
+night_total_population,284346
+daytime_total_population,504346
+eligible_buildings_within_100m,25682
+excluded_buildings_beyond_100m,7859
+eligible_daytime_population,375684

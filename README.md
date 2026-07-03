@@ -1,5 +1,4 @@
 # Tarapur Evacuation Web Visualization (GitHub Pages)
-
 This folder contains a static browser visualization for evacuation dynamics:
 
 - OSM tile basemap (Google Maps-like visual style)
@@ -14,32 +13,7 @@ This folder contains a static browser visualization for evacuation dynamics:
 - Time slider + Play/Pause animation
 - Display selector for roads / buildings / both
 - Scenario selector in the UI (current exported results are night-only unless a day dataset is exported separately)
-
-## 1) Regenerate web data bundle
-
-Run from repository root:
-
-```bash
-python scripts/export_web_visualization_data.py --run-id build_0001 --out-dir docs/data --building-mode polygon
-```
-
-You can swap `--run-id` to any simulation run under `outputs/simulation_runs/`.
-
-Simulation runs can now represent different routing scenarios. For example:
-
-```bash
-python scripts/run_simulation_prototype.py --run-id build_static_001 --routing-mode static
-python scripts/run_simulation_prototype.py --run-id build_dynamic_001 --routing-mode dynamic
-python scripts/export_web_visualization_data.py --run-id build_dynamic_001 --out-dir docs/data --building-mode polygon
-```
-
-By default, the exporter now emits **building polygons**. You can still request centroids explicitly with:
-
-```bash
-python scripts/export_web_visualization_data.py --run-id build_0001 --out-dir docs/data --building-mode centroid
-```
-
-## 2) Local preview
+## 1) Local preview
 
 Use any static server. Example with Python:
 
@@ -53,23 +27,6 @@ Then open:
 http://localhost:8000/docs/
 ```
 
-## 3) Deploy to GitHub Pages
-
-### Option A (recommended): deploy from `/docs` on `main`
-1. Push changes to your GitHub repository.
-2. In GitHub: **Settings → Pages**.
-3. Set:
-   - **Source**: "Deploy from a branch"
-   - **Branch**: `main`
-   - **Folder**: `/docs`
-4. Save and wait for deployment.
-
-Your app will be available at:
-
-```text
-https://<your-username>.github.io/<your-repo>/
-```
-
 ## Notes
 
 - Data files are generated in `docs/data/`:
@@ -79,7 +36,10 @@ https://<your-username>.github.io/<your-repo>/
   - `summary_timeseries.json`
   - `building_evacuation_step.json`
   - `meta.json`
-- The visualization's **Scenario** selector is currently a UI selector only. Existing exported runs are treated as **night-time** unless you later export a separate day dataset.
+- The visualization's **Scenario** selector is currently a UI selector only. Existing exported runs are treated as **night-time** .
+- Sim run will have option for Day time and Night time Evacuation
+- Modes of evacuation will have options for 'Roads only', 'Roads and Railways', 'Roads, Railways and High Speed Rail'.
+
 - The simulation runner accepts a routing-style switch:
 
 ```bash
@@ -95,4 +55,5 @@ python scripts/run_simulation_prototype.py --routing-mode dynamic
 python scripts/run_simulation_prototype.py --crash-enabled false
 ```
 
-- If you need lighter payload size, reduce features or add geometry simplification in export settings.
+
+These flags can be prepared in the visualisation but are optional for now. 
