@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "HSRStation",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": null }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 72.792603975227578, 19.792154670701244 ], [ 72.793840377189937, 19.792086922648512 ], [ 72.793281455754908, 19.784634636847965 ], [ 72.792028116779363, 19.78477013295343 ], [ 72.792603975227578, 19.792154670701244 ] ] ] ] } }
+]
+}
