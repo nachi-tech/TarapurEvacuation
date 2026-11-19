@@ -57,6 +57,30 @@ async function loadJson(path) {
   return res.json();
 }
 
+async function loadJsonParts(manifestPath) {
+  const manifest = await loadJson(manifestPath);
+  if (!Array.isArray(manifest.parts) || manifest.parts.length === 0) {
+    throw new Error(`Invalid edge-timeseries manifest: ${manifestPath}`);
+  }
+
+  const partTexts = await Promise.all(
+    manifest.parts.map(async (part) => {
+      if (typeof part !== "string") {
+        throw new Error(`Invalid edge-timeseries part in ${manifestPath}`);
+      }
+
+      const cacheBust = `cacheBust=${Date.now()}`;
+      const res = await fetch(`./data/${part}?${cacheBust}`, { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(`Failed to load ./data/${part}: ${res.status}`);
+      }
+      return res.text();
+    }),
+  );
+
+  return JSON.parse(partTexts.join(""));
+}
+
 async function loadGeoJson(path) {
   return loadJson(path);
 }
@@ -324,7 +348,7 @@ async function bootstrap() {
   const [roadsGeoJson, buildingsGeoJson, edgeTimeseries, summaryTimeseries, buildingEvacStep, meta] = await Promise.all([
     loadGeoJson("./data/roads.geojson"),
     loadGeoJson("./data/buildings.geojson"),
-    loadJson("./data/edge_timeseries.json"),
+    loadJsonParts("./data/edge_timeseries_parts.json"),
     loadJson("./data/summary_timeseries.json"),
     loadJson("./data/building_evacuation_step.json"),
     loadJson("./data/meta.json"),
