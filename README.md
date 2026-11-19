@@ -40,14 +40,31 @@ http://localhost:8000/docs/
 - Sim run will have option for Day time and Night time Evacuation
 - Modes of evacuation will have options for 'Roads only', 'Roads and Railways', 'Roads, Railways and High Speed Rail'.
 
+- Current dynamic-routing runs use the newer behavioural routing framework,
+  including same-exit reroutes before exit switching and richer reroute
+  decision logging.
+
 - The simulation runner accepts a routing-style switch:
 
 ```bash
 python scripts/run_simulation_prototype.py --routing-mode static
 python scripts/run_simulation_prototype.py --routing-mode dynamic
+python scripts/run_simulation_prototype.py --routing-mode hydraulic_static
 ```
 
-- Dynamic-routing runs may produce additional backend diagnostics such as `reroute_events.csv`, `merge_event_log.csv`, and updated `vehicle_trip_log.csv` fields showing route versions and reroute counts.
+- Hydraulic routing is currently most complete in the `python_queue` backend,
+  and now also has a first `hydraulic_static` libsumo path.
+
+- Dynamic-routing and hydraulic-routing runs may produce additional backend
+  diagnostics such as `reroute_events.csv`, `merge_event_log.csv`, and updated
+  `vehicle_trip_log.csv` fields showing route versions and reroute counts.
+
+- Hydraulic runs may additionally emit:
+  - `hydraulic_component_diagnostics.csv`
+  - `hydraulic_route_decisions.csv`
+  - `hydraulic_split_probabilities.csv`
+  - `hydraulic_mass_balance.csv`
+  - `hydraulic_scan_stats.csv`
 
 - The simulation runner still accepts a top-level road narrowing toggle without running anything automatically, for example:
 

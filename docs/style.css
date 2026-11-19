@@ -1,0 +1,172 @@
+:root {
+  --bg: #0b1220;
+  --panel: #111a2b;
+  --panel-2: #17233a;
+  --text: #e9eef8;
+  --muted: #9fb0cc;
+  --green: #2ecc71;
+  --orange: #f39c12;
+  --red: #e74c3c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid #223452;
+}
+
+.title-wrap h1 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.title-wrap p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.evac-card {
+  background: var(--panel-2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  min-width: 210px;
+  text-align: right;
+}
+
+.evac-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.evac-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #7dffad;
+}
+
+.evac-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--panel-2);
+  border-bottom: 1px solid #223452;
+  flex-wrap: wrap;
+}
+
+.controls label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.btn {
+  border: 1px solid #34507b;
+  background: #1f3355;
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #28436f;
+}
+
+.controls select {
+  border: 1px solid #34507b;
+  background: #13233c;
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.controls select:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.control-note {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+#stepSlider {
+  width: 260px;
+}
+
+.legend {
+  display: flex;
+  gap: 18px;
+  padding: 8px 16px;
+  background: #0d1627;
+  border-bottom: 1px solid #223452;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.legend-group strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  margin-right: 6px;
+}
+
+.swatch.green {
+  background: var(--green);
+}
+
+.swatch.orange {
+  background: var(--orange);
+}
+
+.swatch.red {
+  background: var(--red);
+}
+
+#map {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 320px;
+}
+
+.leaflet-container {
+  background: #d6e6f7;
+}
