@@ -3,84 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tarapur Evacuation Simulation</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
+    <meta name="theme-color" content="#263238" />
+    <title>Palghar Evacuation Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div id="app">
-      <header class="topbar">
-        <div class="title-wrap">
-          <h1>Tarapur Evacuation Simulation</h1>
-          <p>Scenario Exploration</p>
-        </div>
-        <div class="evac-card">
-          <div class="evac-label">Population Evacuated</div>
-          <div id="evacPct" class="evac-value">0.0%</div>
-          <div id="evacRaw" class="evac-sub">0 / 0 people</div>
-          <div id="runIdLabel" class="evac-sub">Run: -</div>
-          <div id="datasetLabel" class="evac-sub">Scenario: Night · Buildings: -</div>
-        </div>
-      </header>
-
-      <section class="controls">
-        <button id="playPauseBtn" class="btn">Play</button>
-        <label for="stepSlider">Step:</label>
-        <input id="stepSlider" type="range" min="0" max="0" value="0" step="1" />
-        <span id="stepLabel">Step 0</span>
-        <span id="timeLabel">Time 0.0 min</span>
-
-        <label for="speedSelect">Speed</label>
-        <select id="speedSelect">
-          <option value="1500">0.5x</option>
-          <option value="1000" selected>1x</option>
-          <option value="500">2x</option>
-          <option value="250">4x</option>
-        </select>
-
-        <label for="displayModeSelect">Display</label>
-        <select id="displayModeSelect">
-          <option value="both" selected>Roads + Buildings</option>
-          <option value="roads">Roads only</option>
-          <option value="buildings">Buildings only</option>
-        </select>
-
-        <label for="scenarioSelect">Scenario</label>
-        <select id="scenarioSelect">
-          <option value="night" selected>Night</option>
-          <option value="day" disabled>Day (not available yet)</option>
-        </select>
-
-        <span id="scenarioStatus" class="control-note">Current dataset: Night-only results</span>
-      </section>
-
-      <section class="legend">
-        <div class="legend-group">
-          <strong>Road occupancy</strong>
-          <div><span class="swatch green"></span> 0.00 - 0.25 (low)</div>
-          <div><span class="swatch orange"></span> &gt;0.25 - 0.50 (medium)</div>
-          <div><span class="swatch red"></span> &gt;0.50 - 1.00 (high)</div>
-        </div>
-        <div class="legend-group">
-          <strong>Buildings</strong>
-          <div><span class="swatch red"></span> Occupied / not fully evacuated</div>
-          <div><span class="swatch green"></span> Fully evacuated</div>
-        </div>
-      </section>
-
-      <div id="map"></div>
-    </div>
-
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
+    <main id="app">
+      <div id="map" aria-label="Evacuation map"></div>
+      <button id="dashboardToggle" class="map-tool" type="button" aria-expanded="true" aria-controls="dashboardPanel" title="Palghar Dashboard"><span aria-hidden="true">☢</span><span class="sr-only">Toggle Palghar dashboard</span></button>
+      <aside id="dashboardPanel" class="dashboard-panel" aria-label="Palghar evacuation controls">
+        <header class="panel-header"><div><h1>Palghar Evacuation</h1><p>Nuclear Plant Emergency Zone</p></div><button id="closeDashboardBtn" class="icon-button" type="button" aria-label="Close dashboard">×</button></header>
+        <section class="panel-section evacuation-summary" aria-live="polite"><p class="section-kicker">Population Evacuated</p><strong id="evacPct" class="evacuation-percent">0.0%</strong><p id="evacRaw" class="summary-copy">0 / 0 people</p><p id="timeLabel" class="summary-copy">0.0 min elapsed</p></section>
+        <section class="panel-section dashboard-form"><label for="scenarioSelect">Scenario</label><select id="scenarioSelect"><option value="night" selected>Night</option><option value="day" disabled>Day</option></select><p id="scenarioStatus" class="field-note">Loading scenario data…</p></section>
+        <section class="panel-section"><div class="section-heading"><span>Map layers</span><span class="heading-note">Local data</span></div><label class="layer-option"><input id="roadsToggle" type="checkbox" checked /> <span class="layer-dot roads"></span>Road congestion</label><label class="layer-option"><input id="buildingsToggle" type="checkbox" checked /> <span class="layer-dot buildings"></span>Building evacuation</label><p class="field-note">Additional rail, hospital, MIDC, district, and emergency-zone layers require the Palghar service datasets and are not included in this static export.</p></section>
+        <section class="panel-section legend-section"><div class="section-heading">Road occupancy</div><div class="legend-row"><span class="legend-swatch low"></span>Low · 0–25%</div><div class="legend-row"><span class="legend-swatch medium"></span>Medium · 25–50%</div><div class="legend-row"><span class="legend-swatch high"></span>High · over 50%</div></section>
+        <section class="panel-section panel-footer"><p id="runIdLabel">Run: —</p><p id="datasetLabel">Building geometry: —</p></section>
+      </aside>
+      <section id="timelinePanel" class="timeline-panel" aria-label="Evacuation timeline"><button id="playPauseBtn" class="play-button" type="button" title="Play evacuation timeline">▶</button><div class="timeline-main"><div class="timeline-heading"><span>Evacuation Timeline</span><span id="stepLabel">Step 0</span></div><input id="stepSlider" type="range" min="0" max="0" value="0" step="1" aria-label="Evacuation timeline step" /><div class="timeline-controls"><label for="speedSelect">Playback speed</label><select id="speedSelect"><option value="1500">0.5×</option><option value="1000" selected>1×</option><option value="500">2×</option><option value="250">4×</option></select></div></div><div class="timeline-stat"><strong id="timelinePct">0.0%</strong><span id="timelineTime">0.0 min elapsed</span></div></section>
+      <section id="insightsPanel" class="insights-panel" aria-label="Network and population insights"><header class="insights-header"><h2>Network &amp; Population Insights</h2><div><button id="collapseInsightsBtn" class="icon-button dark" type="button" aria-label="Collapse insights">⌃</button><button id="closeInsightsBtn" class="icon-button dark" type="button" aria-label="Close insights">×</button></div></header><div class="insights-content"><section class="insight-block"><h3>Current evacuation status</h3><div class="metric-grid"><div><span>Evacuated</span><strong id="insightEvacuated">0</strong></div><div><span>Total population</span><strong id="insightPopulation">0</strong></div><div><span>Elapsed time</span><strong id="insightTime">0.0 min</strong></div><div><span>Buildings cleared</span><strong id="insightBuildings">—</strong></div></div></section><section class="insight-block"><h3>Road congestion</h3><div class="metric-grid compact"><div><span>High-load roads</span><strong id="insightHighRoads">0</strong></div><div><span>Peak occupancy</span><strong id="insightPeakOccupancy">0%</strong></div></div></section><section class="insight-block muted-block"><h3>Directional &amp; distance analysis</h3><p>The Palghar dashboard’s directional population split, distance-to-exit distribution, and network service layers require backend API data that is not packaged with this static viewer.</p></section></div></section>
+      <button id="openInsightsBtn" class="insights-launcher" type="button">Network &amp; Population Insights</button>
+    </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="./app.js"></script>
   </body>
 </html>
