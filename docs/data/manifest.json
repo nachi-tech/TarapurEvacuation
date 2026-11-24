@@ -1,0 +1,15 @@
+{
+  "defaultRunId": "existing_visualization",
+  "runs": [
+    {
+      "id": "existing_visualization",
+      "label": "Existing visualization",
+      "basePath": "./data"
+    },
+    {
+      "id": "priclosure_run",
+      "label": "Periodic closure - 5,000 min",
+      "basePath": "./data/priclosure_run"
+    }
+  ]
+}

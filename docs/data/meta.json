@@ -5011,6 +5011,7 @@
     "night"
   ],
   "building_geometry_mode": "polygon",
+  "backend_mode": "python_queue",
   "road_congestion_thresholds": {
     "green_max": 0.25,
     "orange_max": 0.5,
